@@ -4,32 +4,24 @@
 #
 # This script shows off how to transfer the frame buffer to your computer as a jpeg image.
 
-import image, network, omv, rpc, sensor, struct, pyb
+import image, network, omv, rpc, sensor, struct
 
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA)
 sensor.skip_frames(time = 2000)
-sensor.set_auto_gain(False) # must be turned off for color tracking
-sensor.set_auto_whitebal(False) # must be turned off for color tracking
 
 omv.disable_fb(True)
 interface = rpc.rpc_usb_vcp_slave()
 
-# The threshold tuples define minimum and maximum values for LAB colors.
-# The order is:
-# - (L Min, L Max, A Min, A Max, B Min, B Max)
-threshold = (30, 100, 15, 127, 15, 127) # Default Threshold
-
-def find_blobs(data):
-    print("Finding Blobs")
-    img = sensor.snapshot()    
-
+def snapshot(data):
+    img = sensor.snapshot()
     x = sensor.width() // 2
     y = sensor.height() // 2
     img.draw_circle(x,y,100,thickness=10)
 
-    # blobs = img.find_blobs(threshold, pixels_threshold=5, area_threshold=20)
+    threshold = (30, 100, 15, 127, 15, 127) # Default Threshold
+    #blobs = img.find_blobs(threshold, pixels_threshold=5, area_threshold=20)
 
     # if blobs:
     #     # Sort the blobs by their area
@@ -44,13 +36,12 @@ def find_blobs(data):
 
     #         img.draw_rectangle(blob.rect())
     #         img.draw_cross(blob.cx(), blob.cy())
-
+    
     img.compress(quality=90) # Compress in place
     return bytes()
 
 def jpeg_image_size(data):
-    #img = sensor.get_fb()
-    sensor.snapshot().compress(quality=90)
+    img = sensor.get_fb()
     return struct.pack("<I", img.size())
 
 def jpeg_image_read_cb():
@@ -60,14 +51,11 @@ def jpeg_image_read(data):
     interface.schedule_callback(jpeg_image_read_cb)
     return bytes()
 
-def reset(data):
-    pyb.hard_reset()
-
 # Register call backs.
-interface.register_callback(find_blobs)
+
+interface.register_callback(snapshot)
 interface.register_callback(jpeg_image_size)
 interface.register_callback(jpeg_image_read)
-interface.register_callback(reset)
 
 
 interface.loop()
