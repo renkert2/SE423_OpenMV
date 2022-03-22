@@ -26,10 +26,15 @@ except TypeError:
 pygame.display.set_caption("Frame Buffer")
 clock = pygame.time.Clock()
 
+def find_blobs():
+    result = interface.call("find_blobs")
+
 def get_image_size():
     result = interface.call("jpeg_image_size")
     if result is not None:
         size = struct.unpack("<I", result)[0]
+    else:
+        size=None
     return size
 
 def get_frame_buffer():
@@ -61,4 +66,6 @@ def display_image():
 
 while(True):
     time.sleep(1)
-    display_image()
+    find_blobs()
+    time.sleep(0.5)
+    print(get_image_size())
