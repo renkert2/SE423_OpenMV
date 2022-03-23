@@ -28,6 +28,14 @@ clock = pygame.time.Clock()
 
 def snapshot():
     result = interface.call("snapshot", send_timeout=5000, recv_timeout=5000)
+    if result is not None:
+        try:
+            result = struct.unpack('<fffffffff', result)
+            print("Received Blobs:")
+            for i in (0,3,6):
+                print(f"A = {result[i]}, col = {result[i+1]}, row = {result[i+2]}")
+        except:
+            print("Failed to unpack blobs: received {result}")
     return result
     
 def get_image_size():
