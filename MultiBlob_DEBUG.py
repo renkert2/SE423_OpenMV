@@ -33,17 +33,25 @@ def snapshot(data):
     
     blob_sort = sorted(blobs, key = lambda b: b.pixels(), reverse=True)
     blob_largest = blob_sort[:3]
+    blobs_found = len(blob_largest)
 
     msg = "**".encode()
     uart.write(msg)
     float_bytes = []
-    for b in blob_largest:
-        img.draw_rectangle(b.rect(), color = (255, 0, 0))
-        img.draw_cross(b.cx(), b.cy(), color = (0, 255, 0))
+    for i in range(3):
+        if i < blobs_found:
+            b = blob_largest[i]
 
-        a = float(b.area())
-        x_cnt = float(b.cx())
-        y_cnt = float(b.cy())
+            img.draw_rectangle(b.rect(), color = (255, 0, 0))
+            img.draw_cross(b.cx(), b.cy(), color = (0, 255, 0))
+
+            a = float(b.area())
+            x_cnt = float(b.cx())
+            y_cnt = float(b.cy())
+        else:
+            a = 0.0
+            x_cnt = 0.0
+            y_cnt = 0.0
 
         # Send the blob area and centroids over UART
         b = ustruct.pack(blob_packet, a, x_cnt, y_cnt)
