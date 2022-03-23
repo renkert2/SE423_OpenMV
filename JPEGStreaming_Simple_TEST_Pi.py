@@ -55,7 +55,7 @@ def display_image():
     img = get_frame_buffer()
     if img is not None:
         try:
-            screen.blit(pygame.transform.scale(pygame.image.load(io.BytesIO(img), "jpg"), (screen_w, screen_h)), (0, 0))
+            screen.blit(pygame.transform.scale(pygame.image.load(io.BytesIO(img), "jpg"), (image_w, image_h)), (0, 0))
             pygame.display.update()
             clock.tick()
         except pygame.error: pass
