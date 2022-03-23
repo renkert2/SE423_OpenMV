@@ -27,13 +27,20 @@ while True:
     if blobs:
         blob_sort = sorted(blobs, key = lambda b: b.pixels(), reverse=True)
         blob_largest = blob_sort[:3]
+        blobs_found = len(blob_largest)
 
         msg = "**".encode()
         uart.write(msg)
-        for b in blob_largest:
-            a = float(b.area())
-            x_cnt = float(b.cx())
-            y_cnt = float(b.cy())
+        for i in range(3):
+            if i < blobs_found:
+                b = blob_largest[i]
+                a = float(b.area())
+                x_cnt = float(b.cx())
+                y_cnt = float(b.cy())
+            else:
+                a = 0.0
+                x_cnt = 0.0
+                y_cnt = 0.0
 
             # Send the blob area and centroids over UART
             b = ustruct.pack(blob_packet, a, x_cnt, y_cnt)
