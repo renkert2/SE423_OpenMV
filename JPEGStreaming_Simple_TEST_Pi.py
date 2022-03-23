@@ -13,8 +13,13 @@ print("Connected")
 
 # Setup Screen
 pygame.init()
-screen_w = 640
-screen_h = 480
+screen_w = 480
+screen_h = 800
+
+# QVGA: 320x240
+image_w = 480
+image_h = int(480*(3/4))
+
 try:
     screen = pygame.display.set_mode((screen_w, screen_h), flags=pygame.RESIZABLE)
 except TypeError:
