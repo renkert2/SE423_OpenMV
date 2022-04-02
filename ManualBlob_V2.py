@@ -53,11 +53,11 @@ while(True):
 
                 # COMPLETE: Incrementing Counters
                 #---------
-                """ 
+
                 col_cnt += i # Increment the counters
                 row_cnt += j
-                pixel_cnt += 1 
-                """
+                pixel_cnt += 1
+
                 #---------
 
                 # Color the blob black
@@ -67,10 +67,10 @@ while(True):
         # Calculate the centeroid detected pixels:
         # COMPLETE: Calculate Centroid
         #---------
-        """
+
         x_cnt = col_cnt // pixel_cnt
-        y_cnt = row_cnt // pixel_cnt 
-        """
+        y_cnt = row_cnt // pixel_cnt
+
         #---------
 
         # Draw a cross at the centroid
