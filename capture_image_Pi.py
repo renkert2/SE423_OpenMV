@@ -8,7 +8,7 @@ import os
 ### 
 # Run this script to take and save a snapshot to find the threshold values in MATLAB
 
-port = 'COM4'
+port = '/dev/ttyACM0'
 omv = serial.Serial(port, baudrate=115200)
 
 image_size_packet = "<L"

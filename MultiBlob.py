@@ -65,7 +65,7 @@ while(True):
 
         img = sensor.snapshot()
 
-        blobs = img.find_blobs(threshold, pixels_threshold=200, area_threshold=200)
+        blobs = img.find_blobs(threshold, pixels_threshold=5, area_threshold=20)
 
         # Send the number of blobs found
         num_blobs = len(blobs)

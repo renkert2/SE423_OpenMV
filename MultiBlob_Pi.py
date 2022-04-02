@@ -2,7 +2,7 @@ import struct
 import serial
 import time
 
-port = 'COM4'
+port = '/dev/ttyACM0'
 omv = serial.Serial(port, baudrate=115200)
 
 ### Preset Color Thresholds ###
@@ -14,7 +14,11 @@ thresholds = {} # Make a dictionary to store the threshold values
 thresholds["RED"] = (30, 100, 15, 127, 15, 127) # Generic red Threshold
 thresholds["GREEN"] = (30, 100, -64, -8, -32, 32) # Generic green threshold
 thresholds["BLUE"] = (0, 30, 0, 64, -128, 0) # Generic blue threshold
-thresholds["ORANGE"] = (17, 30, 5, 62, 14, 42) # Custom Orange Threshold
+
+thresholds["GOLF_REDORANGE"] = (0, 100, 22, 127, 31, 127)
+thresholds["GOLF_PINK"] = (0, 100, 27, 127, -128, 15)
+thresholds["GOLF_TEAL"] = (0, 100, -34, -21, -17, 7)
+thresholds["GOLF_BLUE"] = (0, 100, -128, 127, -128, -25)
 
 ### Packets to Send ###
 threshold_packet = 'BBBBBB'
@@ -32,7 +36,7 @@ blob_packet_size = struct.calcsize(blob_packet)
 # Set the thresholds we want the OMV cam to look for
 omv.write(b'T') # enter Set Threshold mode
 
-find_thresholds = [thresholds["RED"], thresholds["ORANGE"]] # Look for both RED and ORANGE
+find_thresholds = [thresholds["GOLF_REDORANGE"]] # Look for both RED and ORANGE
 num_thresholds_data = struct.pack(num_thresholds_packet, len(find_thresholds))
 omv.write(num_thresholds_data) # Send the number of thresholds
 for threshold in find_thresholds:
