@@ -8,7 +8,7 @@ import io, pygame, rpc, serial, serial.tools.list_ports, struct, sys
 import time
 
 # Setup Interface
-interface = rpc.rpc_usb_vcp_master(port="/dev/ttyACM0")
+interface = rpc.rpc_uart_master(port="COM14", baudrate=115200)
 print("Connected")
 
 # Setup Screen
