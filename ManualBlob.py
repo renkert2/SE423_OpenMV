@@ -3,9 +3,6 @@
 import sensor, image, time
 import pyb, ustruct
 
-
-(30, 100, 15, 127, 15, 127)
-
 # Define Threshold for LAB Channels
 L_min = 30
 L_max = 100
@@ -82,12 +79,6 @@ while(True):
         x_cnt = 0
         y_cnt = 0
         print("Blob not found")
-
-    # Send centroid over UART
-    # TODO
-    # b = ustruct.pack('ff', x_cnt, y_cnt)
-    # b = f"{x_cnt}, {y_cnt}\n".encode('UTF-8')
-    # vcp.send(b)
 
     # Print FPS to the serial terminal
     print("FPS: ", clock.fps())
