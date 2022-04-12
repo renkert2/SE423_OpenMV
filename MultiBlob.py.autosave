@@ -22,7 +22,7 @@ while True:
     img = sensor.snapshot()
 
     threshold = (63, 79, -128, -16, 23, 127) # Default Threshold
-    blobs = img.find_blobs([threshold], pixels_threshold=5, area_threshold=20)
+    blobs = img.find_blobs([threshold], pixels_threshold=200, area_threshold=200)
 
     if blobs:
         blob_sort = sorted(blobs, key = lambda b: b.pixels(), reverse=True)

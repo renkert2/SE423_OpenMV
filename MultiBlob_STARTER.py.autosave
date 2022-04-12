@@ -21,7 +21,7 @@ while True:
     green_led.on()
     img = sensor.snapshot()
 
-    threshold = (63, 79, -128, -16, 23, 127) # Default Threshold
+    threshold = ( ??? ) # Threshold Format: (L_min, L_max, A_min, A_max, B_min, B_max)
     blobs = img.find_blobs([threshold], pixels_threshold=5, area_threshold=20)
 
     if blobs:
